@@ -1,0 +1,15 @@
+{
+  "database":{
+    "url": "mongodb://localhost:27017",
+    "name": "mongo-dev"
+  },
+  "server":{
+    "port": "5000"
+  },
+  "app": {
+    "name": "My App",
+    "description": "My App Description",
+    "base_url": "http://localhost:5000",
+    "version": "0.0.1"
+  }
+}
