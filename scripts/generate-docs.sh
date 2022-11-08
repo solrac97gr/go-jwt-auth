@@ -1,0 +1,1 @@
+swag init --parseDependency=true -g cmd/http/main.go
