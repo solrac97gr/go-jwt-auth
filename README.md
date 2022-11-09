@@ -148,3 +148,14 @@ For this example we will make suppose that you want to create endpoints for Blog
    ```
 14. Generate the swagger documentation with the command `/scripts/generate-docs.sh`.
 15. Run the project with the command `go run cmd/http/main.go` or with the script `scripts/run.sh`.
+
+## Considerations
+- The `scripts/generate-mocks.sh` file is used to generate the mocks of the interfaces.
+- The `scripts/generate-docs.sh` file is used to generate the swagger documentation.
+- The `scripts/run.sh` file is used to run the project.
+- The `scripts/run-tests.sh` file is used to run the tests.
+- The `scripts/run-tests-coverage.sh` file is used to run the tests with coverage.
+- For avoid create users with same mail, make the mail field unique in the database (mongo index in this case).
+
+## License
+[Apache License 2.0]()
