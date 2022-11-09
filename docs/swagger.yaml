@@ -11,6 +11,15 @@ definitions:
       token:
         type: string
     type: object
+  models.RegisterRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      password_confirmation:
+        type: string
+    type: object
 info:
   contact:
     email: cgarciarosales97@gmail.com
@@ -60,7 +69,7 @@ paths:
         name: Body
         required: true
         schema:
-          $ref: '#/definitions/models.AuthRequest'
+          $ref: '#/definitions/models.RegisterRequest'
       produces:
       - application/json
       responses:

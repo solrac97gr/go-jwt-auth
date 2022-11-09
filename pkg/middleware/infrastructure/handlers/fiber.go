@@ -16,10 +16,11 @@ type FiberMdlHandlers struct {
 
 var _ ports.MiddlewareHandlers = (*FiberMdlHandlers)(nil)
 
-func NewFiberMdlHandlers(service ports.MiddlewareApplication, logger logger.LoggerApplication) *FiberMdlHandlers {
+func NewFiberMdlHandlers(service ports.MiddlewareApplication, logger logger.LoggerApplication, config configurator.ConfigApplication) *FiberMdlHandlers {
 	return &FiberMdlHandlers{
-		service: service,
-		logger:  logger,
+		service:      service,
+		logger:       logger,
+		configurator: config,
 	}
 }
 

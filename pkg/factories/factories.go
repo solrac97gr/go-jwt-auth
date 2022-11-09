@@ -91,8 +91,8 @@ func (f *Factory) InitializeLogger() *loggerApp.Logger {
 
 func (f *Factory) InitializeConfigurator() *configApp.ConfigService {
 	if f.configurator == nil {
-		validator := f.validator
-		logger := f.logger
+		validator := f.InitializeValidator()
+		logger := f.InitializeLogger()
 		path := f.configFilePath
 
 		repo := configRepo.NewJSONRepository(path)
@@ -114,7 +114,7 @@ func (f *Factory) BuildMiddlewaresHandlers() *mdlHdl.FiberMdlHandlers {
 
 	repo := mdlRepo.NewMongoMdlRepository(configurator, logger)
 	app := mdlApp.NewFiberMiddlewares(repo, validator, logger)
-	return mdlHdl.NewFiberMdlHandlers(app, logger)
+	return mdlHdl.NewFiberMdlHandlers(app, logger, configurator)
 }
 
 func (f *Factory) BuildUserHandlers() *userHdl.UserHdl {

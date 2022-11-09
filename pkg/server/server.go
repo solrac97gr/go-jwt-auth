@@ -1,6 +1,9 @@
 package server
 
 import (
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 	"github.com/golang-jwt/jwt/v4"
@@ -21,15 +24,17 @@ func NewServer(mdl mdl.MiddlewareHandlers, user userHdl.UserHandlers, config con
 
 func (s *Server) Run(port string) error {
 	app := fiber.New()
+	app.Use(cors.New())
+	app.Use(logger.New())
 	app.Get("/swagger/*", swagger.New())
 
 	v1Public := app.Group("/api/v1")
-	v1Private := app.Group("/api/v1").Use(s.mdl.Authenticate())
 
 	// User Endpoints
 	v1Public.Post("/register", s.user.Register)
 	v1Public.Post("/login", s.user.Login)
 
+	v1Private := app.Group("/api/v1").Use(s.mdl.Authenticate())
 	// Test Endpoint
 	v1Private.Get("/secret", func(c *fiber.Ctx) error {
 		user := c.Locals("userHdl").(*jwt.Token)

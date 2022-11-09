@@ -17,9 +17,10 @@ func main() {
 	)
 
 	// Create and Share the dependencies throw the factory [Only one instance]
-	configurator := factory.InitializeConfigurator()
 	factory.InitializeValidator()
+	configurator := factory.InitializeConfigurator()
 	factory.InitializeLogger()
+	factory.InitializeMongoDB()
 
 	middlewares := factory.BuildMiddlewaresHandlers()
 	usersHandlers := factory.BuildUserHandlers()

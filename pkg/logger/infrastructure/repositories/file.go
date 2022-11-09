@@ -18,7 +18,7 @@ func NewCSVFile(path string) *CSVFile {
 }
 
 func (c *CSVFile) Save(log *models.Log) error {
-	file, err := os.Open(c.path)
+	file, err := os.Create(c.path)
 	if err != nil {
 		return err
 	}
@@ -32,13 +32,12 @@ func (c *CSVFile) Save(log *models.Log) error {
 	}(file)
 
 	csvWriter := csv.NewWriter(file)
+	defer csvWriter.Flush()
 
 	// Write data to csv file
-	err = csvWriter.Write([]string{log.Level, log.Message, log.CreatedAt.String()})
+	err = csvWriter.Write([]string{log.ID, log.Level, log.Message, log.CreatedAt.String()})
 	if err != nil {
 		return err
 	}
-	csvWriter.Flush()
-
 	return nil
 }
