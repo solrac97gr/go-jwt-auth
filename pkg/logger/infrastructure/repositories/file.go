@@ -27,7 +27,6 @@ func (c *CSVFile) Save(log *models.Log) error {
 		err := file.Close()
 		if err != nil {
 			panic(err)
-			return
 		}
 	}(file)
 
