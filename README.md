@@ -27,7 +27,7 @@ inside the pkg/server/server.go file.
 
 ## How to use
 For this example we will make suppose that you want to create endpoints for Blog Posts.
-1. Create a new folder inside the pkg folder with the name of your entity. In this case `post`.
+1. Create a new folder inside the internal folder with the name of your entity. In this case `post`.
 2. Create tree folders inside the entity folder: `application`, `domain` and `infrastructure`.
 3. Create two folders inside the domain folder: `ports` and `model`.
 4. Create a file inside the model folder with the name of your entity. In this case `post.go` and define your struct `Post`.
@@ -47,8 +47,104 @@ For this example we will make suppose that you want to create endpoints for Blog
 
 5. Create 3 files inside the ports folder: `repository.go`, `handlers.go` and `application.go`.
 6. Define your interfaces inside the `repository.go`,`handlers.go` and `application.go` file.
+   ```go
+   package ports
+   
+   import "github.com/your_user/your_project/internal/post/domain/model"
+   
+   type PostRepository interface {
+        Create(post *model.Post) error
+        FindAll() ([]*model.Post, error)
+        FindByID(id string) (*model.Post, error)
+        Update(post *model.Post) error
+        Delete(id string) error
+    }
+    ```
 7. Modify the `scripts/generate-mocks.sh` file and add your three new interfaces.
+   ```sh
+   mockgen -destination=pkg/mocks/mock_post_application.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/internal/post/domain/ports PostApplication &&
+   mockgen -destination=pkg/mocks/mock_post_repository.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/internal/post/domain/ports PostRepository &&
+   mockgen -destination=pkg/mocks/mock_post_handlers.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/internal/post/domain/ports PostHandlers
+   ```
 8. Run the `scripts/generate-mocks.sh` file.
 9. Now is time for implement your interfaces. Create two folders inside the `infrastructure` folder with the name of `repositories` and `handlers`.
 10. Create a file inside the `repositories` folder with the name of your interface implementation. In this case `mongo.go` and implement the `PostRepository` interface.
+   ```go
+    package repositories
+
+    type MongoPostRepository struct {
+        db *mongo.Database
+        logger logger.LoggerApplication
+        configurator config.ConfigApplication
+    }
+    
+    func NewMongoPostRepository(db *mongo.Database) *MongoPostRepository {
+        return &MongoPostRepository{db: db}
+    }
+
+    func (m *MongoPostRepository) Create(post *model.Post) error {
+        _, err := m.db.Collection("posts").InsertOne(context.Background(), post)
+        if err != nil {
+			m.logger.Error("Error creating post", err)
+            return err
+        }
+        return nil
+    }
+    .
+    .
+    .
+   ```
 11. Create a file inside the `handlers` folder with the name of your interface implementation. In this case `http.go` and implement the `PostHandler` interface.
+   ```go
+   package handlers
+
+    type HTTPPostHandler struct {
+        postApplication ports.PostApplication
+        logger logger.LoggerApplication
+        validator validator.ValidatorApplication
+    }
+    
+    func NewHTTPPostHandler(postApplication ports.PostApplication) *HTTPPostHandler {
+        return &HTTPPostHandler{postApplication: postApplication}
+    }
+
+    func (h *HTTPPostHandler) CreatePost(c *fiber.Ctx) error {
+        post := &model.Post{}
+        if err := c.BodyParser(post); err != nil {
+            h.logger.Error("Error parsing post", err)
+            return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+        }
+        if err := h.postApplication.Create(post); err != nil {
+            h.logger.Error("Error creating post", err)
+            return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+        }
+        return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Post created successfully"})
+    }
+    .
+    .
+    .
+   ```
+12. Add your handlers to new routes depends on if it's public or private. In this case we will add it to the private routes in file `pkg/server/server.go` .
+   ```go
+   v1Private.Post("/posts", h.postHandler.CreatePost)
+   ```
+13. If you want to add it to the swagger documentation view use comment with special annotation for your handlers.
+   ```go
+   // @Summary Create a new post
+   // @Description Create a new post
+   // @Tags posts
+   // @Accept json
+   // @Produce json
+   // @Param post body model.Post true "Post"
+   // @Success 201 {object} fiber.Map
+   // @Failure 400 {object} fiber.Map
+   // @Failure 500 {object} fiber.Map
+   // @Router /posts [post]
+   func (h *HTTPPostHandler) CreatePost(c *fiber.Ctx) error {
+        .
+        .
+        .
+   }
+   ```
+14. Generate the swagger documentation with the command `/scripts/generate-docs.sh`.
+15. Run the project with the command `go run cmd/http/main.go` or with the script `scripts/run.sh`.
