@@ -25,7 +25,7 @@ inside the pkg/server/server.go file.
 |---------------|------------------|--------|----------------------|----------------|----------|
 | Register      | /api/v1/register | POST   | Create a new user    | email,password |          |
 | Login         | /api/v1/login    | POST   | Login a user         | email,password | token    |
-| Metrics       | /metrics         | GET    | Monitor for your Api |                | html     |
+| Metrics       | /metrics         | GET    | Monitor for your API |                | html     |
 | Documentation | /docs            | GET    | Documentation        |                | html     |
 
 ## How to use
