@@ -18,10 +18,8 @@ import (
 // @Router /register [post]
 func (u *UserHdl) Register(ctx *fiber.Ctx) error {
 	authReq := models.AuthRequest{}
-	ctx.JSON(fiber.Map{
+	return ctx.Status(fiber.StatusAccepted).JSON(fiber.Map{
 		"message": "Hello, World 👋!",
 		"body":    authReq,
 	})
-	//TODO implement me
-	panic("implement me")
 }

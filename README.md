@@ -6,7 +6,7 @@ like logger, database, etc. So I decided to create a template with everything al
 ## Stack
 - Router: Fiber
 - Database: Mongo
-- Doc :Swagger
+- Doc: Swagger
 - Logger: Zap
 - Mocks: gomock
 - Deploy: Docker
