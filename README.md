@@ -17,6 +17,7 @@ example: you can use different database like Postgres, MySQL, etc. Just implemen
 
 ## Endpoints
 You can also check in the route /swagger/index.html after run the project 🤩.
+
 Note 📝: For add a private route you need to create it in the private router `v1Private`
 inside the pkg/server/server.go file.
 
