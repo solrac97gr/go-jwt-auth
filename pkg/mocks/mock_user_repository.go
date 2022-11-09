@@ -35,18 +35,18 @@ func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder {
 }
 
 // FindByCredentials mocks base method.
-func (m *MockUserRepository) FindByCredentials(arg0, arg1 string) (*models.User, error) {
+func (m *MockUserRepository) FindByCredentials(arg0 *models.AuthRequest) (*models.User, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindByCredentials", arg0, arg1)
+	ret := m.ctrl.Call(m, "FindByCredentials", arg0)
 	ret0, _ := ret[0].(*models.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FindByCredentials indicates an expected call of FindByCredentials.
-func (mr *MockUserRepositoryMockRecorder) FindByCredentials(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockUserRepositoryMockRecorder) FindByCredentials(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByCredentials", reflect.TypeOf((*MockUserRepository)(nil).FindByCredentials), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByCredentials", reflect.TypeOf((*MockUserRepository)(nil).FindByCredentials), arg0)
 }
 
 // Save mocks base method.

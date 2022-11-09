@@ -4,6 +4,7 @@ type Config struct {
 	App      App      `json:"app"`
 	Database Database `json:"database"`
 	Server   Server   `json:"server"`
+	JWT      JWT      `json:"jwt"`
 }
 
 func (c *Config) Validate() error {

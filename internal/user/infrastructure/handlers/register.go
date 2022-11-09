@@ -11,15 +11,28 @@ import (
 // @Accept json
 // @Produce json
 // @Tags User
-// @Param Body body models.AuthRequest true "Register"
+// @Param Body body models.RegisterRequest true "Register"
 // @Success 200 {object} string
 // @Failure 400 {object} string
 // @Failure 500 {object} string
 // @Router /register [post]
-func (u *UserHdl) Register(ctx *fiber.Ctx) error {
-	authReq := models.AuthRequest{}
-	return ctx.Status(fiber.StatusAccepted).JSON(fiber.Map{
-		"message": "Hello, World 👋!",
-		"body":    authReq,
+func (hdl *UserHdl) Register(ctx *fiber.Ctx) error {
+	authReq := new(models.RegisterRequest)
+	if err := ctx.BodyParser(authReq); err != nil {
+		hdl.logger.Error(err.Error())
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	err := hdl.app.Create(authReq)
+	if err != nil {
+		hdl.logger.Error(err.Error())
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "User created successfully",
 	})
 }

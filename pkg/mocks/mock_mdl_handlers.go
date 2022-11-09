@@ -35,29 +35,15 @@ func (m *MockMiddlewareHandlers) EXPECT() *MockMiddlewareHandlersMockRecorder {
 }
 
 // Authenticate mocks base method.
-func (m *MockMiddlewareHandlers) Authenticate(arg0 *fiber.Ctx) error {
+func (m *MockMiddlewareHandlers) Authenticate() func(*fiber.Ctx) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Authenticate", arg0)
-	ret0, _ := ret[0].(error)
+	ret := m.ctrl.Call(m, "Authenticate")
+	ret0, _ := ret[0].(func(*fiber.Ctx) error)
 	return ret0
 }
 
 // Authenticate indicates an expected call of Authenticate.
-func (mr *MockMiddlewareHandlersMockRecorder) Authenticate(arg0 interface{}) *gomock.Call {
+func (mr *MockMiddlewareHandlersMockRecorder) Authenticate() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Authenticate", reflect.TypeOf((*MockMiddlewareHandlers)(nil).Authenticate), arg0)
-}
-
-// Login mocks base method.
-func (m *MockMiddlewareHandlers) Login(arg0 *fiber.Ctx) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Login", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Login indicates an expected call of Login.
-func (mr *MockMiddlewareHandlersMockRecorder) Login(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockMiddlewareHandlers)(nil).Login), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Authenticate", reflect.TypeOf((*MockMiddlewareHandlers)(nil).Authenticate))
 }

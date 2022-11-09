@@ -33,4 +33,10 @@ var (
 	ErrLogMessageRequired = errors.New("log message is required")
 	// ErrAppHostRequired is returned when an app host is not provided
 	ErrAppHostRequired = errors.New("app host is required")
+	// ErrSecretRequired is returned when a secret is not provided
+	ErrSecretRequired = errors.New("secret is required")
+	// ErrExpiresInRequired is returned when a expires_in is not provided
+	ErrExpiresInRequired = errors.New("days of expiration is required")
+	// ErrPasswordConfirmation is returned when a password confirmation is not same as password
+	ErrPasswordConfirmation = errors.New("password confirmation is not same as password")
 )

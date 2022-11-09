@@ -1,6 +1,7 @@
 package factories
 
 import (
+	"context"
 	userApp "github.com/solrac97gr/go-jwt-auth/internal/user/application"
 	userHdl "github.com/solrac97gr/go-jwt-auth/internal/user/infrastructure/handlers"
 	userRepo "github.com/solrac97gr/go-jwt-auth/internal/user/infrastructure/repositories"
@@ -12,7 +13,14 @@ import (
 	mdlHdl "github.com/solrac97gr/go-jwt-auth/pkg/middleware/infrastructure/handlers"
 	mdlRepo "github.com/solrac97gr/go-jwt-auth/pkg/middleware/infrastructure/repositories"
 	valApp "github.com/solrac97gr/go-jwt-auth/pkg/validator/application"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"log"
+	"time"
 )
+
+const MongoClientTimeout = 10
 
 type Factory struct {
 	//Variables
@@ -22,6 +30,7 @@ type Factory struct {
 	validator    *valApp.Validator
 	configurator *configApp.ConfigService
 	logger       *loggerApp.Logger
+	dbClient     *mongo.Client
 }
 
 func NewFactory(logFilePath string, configFilePath string) *Factory {
@@ -29,6 +38,33 @@ func NewFactory(logFilePath string, configFilePath string) *Factory {
 		logFilePath:    logFilePath,
 		configFilePath: configFilePath,
 	}
+}
+
+func (f *Factory) InitializeMongoDB() *mongo.Client {
+	if f.dbClient != nil {
+		return f.dbClient
+	}
+	configurator := f.InitializeConfigurator()
+	cfg, err := configurator.GetConfig()
+	if err != nil {
+		panic(err)
+	}
+
+	ctx, cancelFunc := context.WithTimeout(context.Background(), MongoClientTimeout*time.Second)
+	defer cancelFunc()
+
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(
+		cfg.Database.URL,
+	))
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = client.Ping(ctx, readpref.Primary())
+	if err != nil {
+		log.Fatal(err)
+	}
+	f.dbClient = client
+	return client
 }
 
 func (f *Factory) InitializeValidator() *valApp.Validator {
@@ -72,9 +108,9 @@ func (f *Factory) InitializeConfigurator() *configApp.ConfigService {
 }
 
 func (f *Factory) BuildMiddlewaresHandlers() *mdlHdl.FiberMdlHandlers {
-	configurator := f.configurator
-	logger := f.logger
-	validator := f.validator
+	configurator := f.InitializeConfigurator()
+	logger := f.InitializeLogger()
+	validator := f.InitializeValidator()
 
 	repo := mdlRepo.NewMongoMdlRepository(configurator, logger)
 	app := mdlApp.NewFiberMiddlewares(repo, validator, logger)
@@ -82,11 +118,12 @@ func (f *Factory) BuildMiddlewaresHandlers() *mdlHdl.FiberMdlHandlers {
 }
 
 func (f *Factory) BuildUserHandlers() *userHdl.UserHdl {
-	configurator := f.configurator
-	logger := f.logger
-	validator := f.validator
+	configurator := f.InitializeConfigurator()
+	logger := f.InitializeLogger()
+	validator := f.InitializeValidator()
+	dbClient := f.InitializeMongoDB()
 
-	repo := userRepo.NewUserMongoDB(configurator, logger)
-	app := userApp.NewUserApp(repo, validator, logger)
+	repo := userRepo.NewUserMongoDB(configurator, logger, dbClient)
+	app := userApp.NewUserApp(repo, validator, logger, configurator)
 	return userHdl.NewUserHdl(app, logger)
 }

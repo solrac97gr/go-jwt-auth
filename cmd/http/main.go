@@ -24,7 +24,7 @@ func main() {
 	middlewares := factory.BuildMiddlewaresHandlers()
 	usersHandlers := factory.BuildUserHandlers()
 
-	server := server.NewServer(middlewares, usersHandlers)
+	server := server.NewServer(middlewares, usersHandlers, configurator)
 
 	config, err := configurator.GetConfig()
 	if err != nil {

@@ -5,5 +5,5 @@ import (
 )
 
 type MiddlewareHandlers interface {
-	Authenticate(ctx *fiber.Ctx) error
+	Authenticate() fiber.Handler
 }

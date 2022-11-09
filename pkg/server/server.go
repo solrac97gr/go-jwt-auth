@@ -3,17 +3,20 @@ package server
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
-	user "github.com/solrac97gr/go-jwt-auth/internal/user/domain/ports"
+	"github.com/golang-jwt/jwt/v4"
+	userHdl "github.com/solrac97gr/go-jwt-auth/internal/user/domain/ports"
+	configurator "github.com/solrac97gr/go-jwt-auth/pkg/config/domain/ports"
 	mdl "github.com/solrac97gr/go-jwt-auth/pkg/middleware/domain/ports"
 )
 
 type Server struct {
-	mdl  mdl.MiddlewareHandlers
-	user user.UserHandlers
+	mdl          mdl.MiddlewareHandlers
+	user         userHdl.UserHandlers
+	configurator configurator.ConfigApplication
 }
 
-func NewServer(mdl mdl.MiddlewareHandlers, user user.UserHandlers) *Server {
-	return &Server{mdl: mdl, user: user}
+func NewServer(mdl mdl.MiddlewareHandlers, user userHdl.UserHandlers, config configurator.ConfigApplication) *Server {
+	return &Server{mdl: mdl, user: user, configurator: config}
 }
 
 func (s *Server) Run(port string) error {
@@ -21,15 +24,18 @@ func (s *Server) Run(port string) error {
 	app.Get("/swagger/*", swagger.New())
 
 	v1Public := app.Group("/api/v1")
-	v1Private := app.Group("/api/v1").Use(s.mdl.Authenticate)
+	v1Private := app.Group("/api/v1").Use(s.mdl.Authenticate())
 
 	// User Endpoints
 	v1Public.Post("/register", s.user.Register)
 	v1Public.Post("/login", s.user.Login)
 
 	// Test Endpoint
-	v1Private.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
+	v1Private.Get("/secret", func(c *fiber.Ctx) error {
+		user := c.Locals("userHdl").(*jwt.Token)
+		claims := user.Claims.(jwt.MapClaims)
+		email := claims["email"].(string)
+		return c.SendString("Welcome 👋" + email)
 
 	})
 

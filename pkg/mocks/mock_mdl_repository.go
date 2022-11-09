@@ -5,7 +5,6 @@
 package mocks
 
 import (
-	"github.com/solrac97gr/go-jwt-auth/internal/user/domain/models"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -46,18 +45,4 @@ func (m *MockMiddlewareRepository) Authenticate(arg0 string) error {
 func (mr *MockMiddlewareRepositoryMockRecorder) Authenticate(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Authenticate", reflect.TypeOf((*MockMiddlewareRepository)(nil).Authenticate), arg0)
-}
-
-// Login mocks base method.
-func (m *MockMiddlewareRepository) Login(arg0 *models.AuthRequest) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Login", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Login indicates an expected call of Login.
-func (mr *MockMiddlewareRepositoryMockRecorder) Login(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockMiddlewareRepository)(nil).Login), arg0)
 }

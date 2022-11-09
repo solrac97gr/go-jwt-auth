@@ -35,7 +35,7 @@ func (m *MockUserApplication) EXPECT() *MockUserApplicationMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockUserApplication) Create(arg0 *models.User) error {
+func (m *MockUserApplication) Create(arg0 *models.RegisterRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0)
 	ret0, _ := ret[0].(error)
@@ -49,10 +49,10 @@ func (mr *MockUserApplicationMockRecorder) Create(arg0 interface{}) *gomock.Call
 }
 
 // Login mocks base method.
-func (m *MockUserApplication) Login(arg0 *models.User) (string, error) {
+func (m *MockUserApplication) Login(arg0 *models.AuthRequest) (*models.AuthResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Login", arg0)
-	ret0, _ := ret[0].(string)
+	ret0, _ := ret[0].(*models.AuthResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
