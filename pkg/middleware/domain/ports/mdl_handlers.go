@@ -5,6 +5,5 @@ import (
 )
 
 type MiddlewareHandlers interface {
-	Login(ctx *fiber.Ctx) error
 	Authenticate(ctx *fiber.Ctx) error
 }

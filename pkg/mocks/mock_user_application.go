@@ -35,7 +35,7 @@ func (m *MockUserApplication) EXPECT() *MockUserApplicationMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockUserApplication) Create(arg0 models.User) error {
+func (m *MockUserApplication) Create(arg0 *models.User) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0)
 	ret0, _ := ret[0].(error)
@@ -46,4 +46,19 @@ func (m *MockUserApplication) Create(arg0 models.User) error {
 func (mr *MockUserApplicationMockRecorder) Create(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUserApplication)(nil).Create), arg0)
+}
+
+// Login mocks base method.
+func (m *MockUserApplication) Login(arg0 *models.User) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Login", arg0)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Login indicates an expected call of Login.
+func (mr *MockUserApplicationMockRecorder) Login(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockUserApplication)(nil).Login), arg0)
 }

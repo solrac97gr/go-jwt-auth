@@ -34,8 +34,22 @@ func (m *MockUserHandlers) EXPECT() *MockUserHandlersMockRecorder {
 	return m.recorder
 }
 
+// Login mocks base method.
+func (m *MockUserHandlers) Login(arg0 *fiber.Ctx) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Login", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Login indicates an expected call of Login.
+func (mr *MockUserHandlersMockRecorder) Login(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockUserHandlers)(nil).Login), arg0)
+}
+
 // Register mocks base method.
-func (m *MockUserHandlers) Register(arg0 fiber.Ctx) error {
+func (m *MockUserHandlers) Register(arg0 *fiber.Ctx) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Register", arg0)
 	ret0, _ := ret[0].(error)

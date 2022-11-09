@@ -4,19 +4,22 @@ import (
 	"encoding/json"
 	"github.com/solrac97gr/go-jwt-auth/pkg/config/domain/models"
 	"github.com/solrac97gr/go-jwt-auth/pkg/config/domain/ports"
+	logger "github.com/solrac97gr/go-jwt-auth/pkg/logger/domain/ports"
 	validator "github.com/solrac97gr/go-jwt-auth/pkg/validator/domain/ports"
-	"log"
 )
 
 type ConfigService struct {
 	repository    ports.ConfigRepository
 	configuration *models.Config
 	validator     validator.ValidatorApplication
+	logger        logger.LoggerApplication
 }
 
-func NewConfigService(repository ports.ConfigRepository) *ConfigService {
+func NewConfigService(repository ports.ConfigRepository, val validator.ValidatorApplication, logger logger.LoggerApplication) *ConfigService {
 	return &ConfigService{
 		repository: repository,
+		validator:  val,
+		logger:     logger,
 	}
 }
 
@@ -28,7 +31,7 @@ func (c *ConfigService) Config() error {
 	}
 	jsonParser := json.NewDecoder(file)
 	if err = jsonParser.Decode(&configuration); err != nil {
-		log.Fatal("parsing config file", err.Error())
+		return err
 	}
 	c.configuration = configuration
 	return nil

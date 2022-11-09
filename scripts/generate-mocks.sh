@@ -6,4 +6,8 @@ mockgen -destination=pkg/mocks/mock_mdl_handlers.go -package=mocks --build_flags
 mockgen -destination=pkg/mocks/mock_mdl_repository.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/pkg/middleware/domain/ports MiddlewareRepository &&
 mockgen -destination=pkg/mocks/mock_validator_application.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/pkg/validator/domain/ports ValidatorApplication &&
 mockgen -destination=pkg/mocks/mock_validator_evaluable.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/pkg/validator/domain/ports Evaluable &&
+mockgen -destination=pkg/mocks/mock_config_application.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/pkg/config/domain/ports ConfigApplication &&
+mockgen -destination=pkg/mocks/mock_config_repository.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/pkg/config/domain/ports ConfigRepository &&
+mockgen -destination=pkg/mocks/mock_logger_application.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/pkg/logger/domain/ports LoggerApplication &&
+mockgen -destination=pkg/mocks/mock_logger_repository.go -package=mocks --build_flags=--mod=mod github.com/solrac97gr/go-jwt-auth/pkg/logger/domain/ports LoggerRepository &&
 echo "Mocks generated successfully 🚀[pkg/mocks]"

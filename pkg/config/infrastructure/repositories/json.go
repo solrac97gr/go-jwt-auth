@@ -12,6 +12,6 @@ func NewJSONRepository(path string) *JSONRepository {
 	}
 }
 
-func (j *JSONRepository) GetConfigFile(path string) (*os.File, error) {
+func (j *JSONRepository) GetConfigFile() (*os.File, error) {
 	return os.Open(j.path)
 }

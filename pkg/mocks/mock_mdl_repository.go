@@ -5,10 +5,10 @@
 package mocks
 
 import (
+	"github.com/solrac97gr/go-jwt-auth/internal/user/domain/models"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	models "github.com/solrac97gr/go-jwt-auth/pkg/middleware/domain/models"
 )
 
 // MockMiddlewareRepository is a mock of MiddlewareRepository interface.

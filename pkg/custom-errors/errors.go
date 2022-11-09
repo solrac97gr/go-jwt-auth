@@ -27,4 +27,10 @@ var (
 	ErrAppBaseURLRequired = errors.New("app base url is required")
 	// ErrAppVersionRequired is returned when an app version is not provided
 	ErrAppVersionRequired = errors.New("app version is required")
+	// ErrLogLevelRequired is returned when a log level is not provided
+	ErrLogLevelRequired = errors.New("log level is required")
+	// ErrLogMessageRequired is returned when a log message is not provided
+	ErrLogMessageRequired = errors.New("log message is required")
+	// ErrAppHostRequired is returned when an app host is not provided
+	ErrAppHostRequired = errors.New("app host is required")
 )
