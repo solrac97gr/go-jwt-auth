@@ -13,6 +13,7 @@ like logger, database, etc. So I decided to create a template with everything al
 - CI: [Github Actions 🐙](https://docs.github.com/en/actions)
 
 ## Endpoints
+You can also check in the route /swagger/index.html after run the project 🤩 
 
 | Name     | Path             | Method | Description       | Request        | Response |
 |----------|------------------|--------|-------------------|----------------|----------|
