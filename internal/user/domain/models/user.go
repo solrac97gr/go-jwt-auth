@@ -24,7 +24,7 @@ func (u *User) Validate() error {
 	if u.Password == "" {
 		return customErr.ErrPasswordRequired
 	}
-	if utils.IsValid(u.Password) {
+	if !utils.IsValid(u.Password) {
 		return customErr.ErrPasswordFormat
 	}
 	if u.CreatedAt.IsZero() {

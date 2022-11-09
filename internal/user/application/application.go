@@ -30,13 +30,15 @@ func (app *UserApp) Create(registerReq *models.RegisterRequest) error {
 	}
 	user := new(models.User)
 	user.Email = registerReq.Email
-	user.Password = user.Hash256Password(registerReq.Password)
+	user.Password = registerReq.Password
 	user.CreatedAt = time.Now()
 
 	if err := app.validator.Struct(user); err != nil {
 		app.logger.Error("Error validating user", err)
 		return err
 	}
+	// Hash password after the validation
+	user.Password = user.Hash256Password(registerReq.Password)
 
 	err := app.repo.Save(user)
 	if err != nil {

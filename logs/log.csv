@@ -1,1 +1,1 @@
-,error,"write exception: write errors: [E11000 duplicate key error collection: go-jwt-db.users index: email_text dup key: { _fts: ""carlo"", _ftsx: 0.6666666666666666 }]",2022-11-09 22:56:10.649242 +0300 MSK m=+22.184437251
+,info,User created,2022-11-09 23:15:58.85116 +0300 MSK m=+84.029638251

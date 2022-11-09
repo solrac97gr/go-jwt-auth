@@ -37,7 +37,7 @@ func (s *Server) Run(port string) error {
 	v1Private := app.Group("/api/v1").Use(s.mdl.Authenticate())
 	// Test Endpoint
 	v1Private.Get("/secret", func(c *fiber.Ctx) error {
-		user := c.Locals("userHdl").(*jwt.Token)
+		user := c.Locals("user").(*jwt.Token)
 		claims := user.Claims.(jwt.MapClaims)
 		email := claims["email"].(string)
 		return c.SendString("Welcome 👋" + email)
