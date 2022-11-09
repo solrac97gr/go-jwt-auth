@@ -13,7 +13,9 @@ like logger, database, etc. So I decided to create a template with everything al
 - CI: [Github Actions 🐙](https://docs.github.com/en/actions)
 
 ## Endpoints
-You can also check in the route /swagger/index.html after run the project 🤩 
+You can also check in the route /swagger/index.html after run the project 🤩.
+Note 📝: For add a private route you need to create it in the private router `v1Private`
+inside the pkg/server/server.go file.
 
 | Name     | Path             | Method | Description       | Request        | Response |
 |----------|------------------|--------|-------------------|----------------|----------|
