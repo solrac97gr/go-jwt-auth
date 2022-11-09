@@ -3,6 +3,9 @@ Template create for use as CookieCutter for my Golang projects.
 The hardest part for start a project for me was to chose Stack and create the initial login and integrations
 like logger, database, etc. So I decided to create a template with everything already working.
 
+All the project is based in interfaces that mean you can implement your own logic and use it in the project.
+example: you can use different database like Postgres, MySQL, etc. Just implement the interface and use it.
+
 ## Stack
 - Router: [Fiber 🚀](https://gofiber.io)
 - Database: [Mongo 💾](https://www.mongodb.com/docs/drivers/go/current/) 
@@ -28,5 +31,24 @@ For this example we will make suppose that you want to create endpoints for Blog
 2. Create tree folders inside the entity folder: `application`, `domain` and `infrastructure`.
 3. Create two folders inside the domain folder: `ports` and `model`.
 4. Create a file inside the model folder with the name of your entity. In this case `post.go` and define your struct `Post`.
+    ```go
+    package model
+   
+   import "time"  
+
+    type Post struct {
+        ID        string `json:"id" bson:"_id"`
+        Title     string             `json:"title" bson:"title"`
+        Content   string             `json:"content" bson:"content"`
+        CreatedAt time.Time          `json:"created_at" bson:"created_at"`
+        UpdatedAt time.Time          `json:"updated_at" bson:"updated_at"`
+    }
+    ```
+
 5. Create 3 files inside the ports folder: `repository.go`, `handlers.go` and `application.go`.
 6. Define your interfaces inside the `repository.go`,`handlers.go` and `application.go` file.
+7. Modify the `scripts/generate-mocks.sh` file and add your three new interfaces.
+8. Run the `scripts/generate-mocks.sh` file.
+9. Now is time for implement your interfaces. Create two folders inside the `infrastructure` folder with the name of `repositories` and `handlers`.
+10. Create a file inside the `repositories` folder with the name of your interface implementation. In this case `mongo.go` and implement the `PostRepository` interface.
+11. Create a file inside the `handlers` folder with the name of your interface implementation. In this case `http.go` and implement the `PostHandler` interface.
