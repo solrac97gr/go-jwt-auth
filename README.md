@@ -21,3 +21,12 @@ inside the pkg/server/server.go file.
 |----------|------------------|--------|-------------------|----------------|----------|
 | Register | /api/v1/register | POST   | Create a new user | email,password |          |
 | Login    | /api/v1/login    | POST   | Login a user      | email,password | token    |
+
+## How to use
+For this example we will make suppose that you want to create endpoints for Blog Posts.
+1. Create a new folder inside the pkg folder with the name of your entity. In this case `post`.
+2. Create tree folders inside the entity folder: `application`, `domain` and `infrastructure`.
+3. Create two folders inside the domain folder: `ports` and `model`.
+4. Create a file inside the model folder with the name of your entity. In this case `post.go` and define your struct `Post`.
+5. Create 3 files inside the ports folder: `repository.go`, `handlers.go` and `application.go`.
+6. Define your interfaces inside the `repository.go`,`handlers.go` and `application.go` file.
