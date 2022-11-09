@@ -39,4 +39,6 @@ var (
 	ErrExpiresInRequired = errors.New("days of expiration is required")
 	// ErrPasswordConfirmation is returned when a password confirmation is not same as password
 	ErrPasswordConfirmation = errors.New("password confirmation is not same as password")
+	// ErrInvalidEmail is returned when a email is not valid
+	ErrInvalidEmail = errors.New("email is not valid")
 )

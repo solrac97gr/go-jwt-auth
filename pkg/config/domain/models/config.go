@@ -8,27 +8,21 @@ type Config struct {
 }
 
 func (c *Config) Validate() error {
-	//if c.Database != nil {
-	//	if err := c.Database.Validate(); err != nil {
-	//		return err
-	//	}
-	//}
-	//if c.App != nil {
-	//	if err := c.App.Validate(); err != nil {
-	//		return err
-	//	}
-	//}
-	//if c.Server != nil {
-	//	if err := c.Server.Validate(); err != nil {
-	//		return err
-	//	}
-	//}
-	//
-	//if c.JWT != nil {
-	//	if err := c.JWT.Validate(); err != nil {
-	//		return err
-	//	}
-	//}
+	if err := c.Database.Validate(); err != nil {
+		return err
+	}
+
+	if err := c.App.Validate(); err != nil {
+		return err
+	}
+
+	if err := c.Server.Validate(); err != nil {
+		return err
+	}
+
+	if err := c.JWT.Validate(); err != nil {
+		return err
+	}
 
 	return nil
 }

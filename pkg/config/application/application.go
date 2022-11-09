@@ -33,9 +33,6 @@ func (c *ConfigService) Config() error {
 	if err = jsonParser.Decode(&configuration); err != nil {
 		return err
 	}
-	if err := c.validator.Struct(c.configuration); err != nil {
-		return err
-	}
 	c.configuration = configuration
 	return nil
 }

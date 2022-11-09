@@ -5,6 +5,7 @@ import (
 	customErr "github.com/solrac97gr/go-jwt-auth/pkg/custom-errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/sha3"
+	"net/mail"
 	"time"
 )
 
@@ -24,6 +25,10 @@ func (u *User) Validate() error {
 	}
 	if u.CreatedAt.IsZero() {
 		return customErr.ErrCreateAtRequired
+	}
+	_, err := mail.ParseAddress(u.Email)
+	if err != nil {
+		return customErr.ErrInvalidEmail
 	}
 	return nil
 }
