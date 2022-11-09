@@ -41,4 +41,8 @@ var (
 	ErrPasswordConfirmation = errors.New("password confirmation is not same as password")
 	// ErrInvalidEmail is returned when a email is not valid
 	ErrInvalidEmail = errors.New("email is not valid")
+	// ErrPasswordLength is returned when a password is not valid
+	ErrPasswordLength = errors.New("password must be at least 8 characters")
+	// ErrPasswordFormat is returned when a password is not valid
+	ErrPasswordFormat = errors.New("password must contain at least one uppercase letter, one lowercase letter, one number and one special character")
 )
