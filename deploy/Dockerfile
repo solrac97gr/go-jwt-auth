@@ -1,13 +1,16 @@
 FROM golang:1.18-alpine as build
 RUN mkdir /app
-ADD .. /app/
+ADD . /app/
 WORKDIR /app
-COPY ../go.mod .
-COPY ../go.sum .
+COPY ./go.mod .
+COPY ./go.sum .
+ENV GOPROXY https://proxy.golang.org,direct
 RUN go mod download
-RUN go build -o main ./cmd/http/main.go
+ENV CGO_ENABLED=0
+RUN GOOS=linux go build -o main ./cmd/http/main.go
 
-FROM busybox
-COPY --from=build /app/main /app/
-EXPOSE 5000
-CMD ["./main"]
+FROM scratch as serve
+WORKDIR /app
+COPY --from=build /app/config/env.json ./config/env.json
+COPY --from=build /app/main .
+CMD ["/app/main"]
