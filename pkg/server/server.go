@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
@@ -23,10 +24,15 @@ func NewServer(mdl mdl.MiddlewareHandlers, user userHdl.UserHandlers, config con
 }
 
 func (s *Server) Run(port string) error {
+	cfg, err := s.configurator.GetConfig()
+	if err != nil {
+		return err
+	}
 	app := fiber.New()
 	app.Use(cors.New())
+	app.Get("/metrics", monitor.New(monitor.Config{Title: cfg.App.Name + " Metrics"}))
 	app.Use(logger.New())
-	app.Get("/swagger/*", swagger.New())
+	app.Get("/docs/*", swagger.New())
 
 	v1Public := app.Group("/api/v1")
 
@@ -44,7 +50,7 @@ func (s *Server) Run(port string) error {
 
 	})
 
-	err := app.Listen(":" + port)
+	err = app.Listen(":" + port)
 	if err != nil {
 		return err
 	}

@@ -15,16 +15,18 @@ example: you can use different database like Postgres, MySQL, etc. Just implemen
 - Deploy: [Docker 🐳](https://www.docker.com)
 - CI: [Github Actions 🐙](https://docs.github.com/en/actions)
 
-## Endpoints
+## Routes
 You can also check in the route /swagger/index.html after run the project 🤩.
 
 Note 📝: For add a private route you need to create it in the private router `v1Private`
 inside the pkg/server/server.go file.
 
-| Name     | Path             | Method | Description       | Request        | Response |
-|----------|------------------|--------|-------------------|----------------|----------|
-| Register | /api/v1/register | POST   | Create a new user | email,password |          |
-| Login    | /api/v1/login    | POST   | Login a user      | email,password | token    |
+| Name          | Path             | Method | Description          | Request        | Response |
+|---------------|------------------|--------|----------------------|----------------|----------|
+| Register      | /api/v1/register | POST   | Create a new user    | email,password |          |
+| Login         | /api/v1/login    | POST   | Login a user         | email,password | token    |
+| Metrics       | /metrics         | GET    | Monitor for your Api |                | html     |
+| Documentation | /docs            | GET    | Documentation        |                | html     |
 
 ## How to use
 For this example we will make suppose that you want to create endpoints for Blog Posts.
