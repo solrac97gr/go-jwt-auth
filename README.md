@@ -15,6 +15,11 @@ example: you can use different database like Postgres, MySQL, etc. Just implemen
 - Deploy: [Docker 🐳](https://www.docker.com)
 - CI: [Github Actions 🐙](https://docs.github.com/en/actions)
 
+## Before the execution
+- Modify the file `./config/env.json` with your parameters
+- Install gomock `go install github.com/golang/mock/mockgen@v1.6.0`
+- Install swag `go install github.com/swaggo/swag/cmd/swag@latest`
+
 ## Routes
 You can also check in the route /swagger/index.html after run the project 🤩.
 

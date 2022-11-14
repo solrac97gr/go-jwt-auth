@@ -35,11 +35,11 @@ var (
 	ErrAppHostRequired = errors.New("app host is required")
 	// ErrSecretRequired is returned when a secret is not provided
 	ErrSecretRequired = errors.New("secret is required")
-	// ErrExpiresInRequired is returned when a expires_in is not provided
+	// ErrExpiresInRequired is returned when an expires_in is not provided
 	ErrExpiresInRequired = errors.New("days of expiration is required")
 	// ErrPasswordConfirmation is returned when a password confirmation is not same as password
 	ErrPasswordConfirmation = errors.New("password confirmation is not same as password")
-	// ErrInvalidEmail is returned when a email is not valid
+	// ErrInvalidEmail is returned when an email is not valid
 	ErrInvalidEmail = errors.New("email is not valid")
 	// ErrPasswordLength is returned when a password is not valid
 	ErrPasswordLength = errors.New("password must be at least 8 characters")
