@@ -14,6 +14,7 @@ import (
 )
 
 type Server struct {
+	app          *fiber.App
 	mdl          mdl.MiddlewareHandlers
 	user         userHdl.UserHandlers
 	configurator configurator.ConfigApplication
@@ -49,10 +50,15 @@ func (s *Server) Run(port string) error {
 		return c.SendString("Welcome 👋" + email)
 
 	})
-
+	s.app = app
 	err = app.Listen(":" + port)
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func (s *Server) Stop() error {
+	s.app.Shutdown()
 	return nil
 }
