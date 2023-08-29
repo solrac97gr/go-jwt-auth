@@ -7,8 +7,8 @@ package mocks
 import (
 	reflect "reflect"
 
-	gomock "github.com/golang/mock/gomock"
 	models "github.com/solrac97gr/go-jwt-auth/pkg/config/domain/models"
+	gomock "go.uber.org/mock/gomock"
 )
 
 // MockConfigApplication is a mock of ConfigApplication interface.

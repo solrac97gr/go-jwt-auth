@@ -2,11 +2,12 @@ package server_test
 
 import (
 	"errors"
-	"github.com/golang/mock/gomock"
+	"testing"
+
 	"github.com/solrac97gr/go-jwt-auth/pkg/config/domain/models"
 	"github.com/solrac97gr/go-jwt-auth/pkg/mocks"
 	"github.com/solrac97gr/go-jwt-auth/pkg/server"
-	"testing"
+	"go.uber.org/mock/gomock"
 )
 
 func TestServer_Run(t *testing.T) {
