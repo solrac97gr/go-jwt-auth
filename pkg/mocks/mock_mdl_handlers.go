@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	fiber "github.com/gofiber/fiber/v2"
-	gomock "github.com/golang/mock/gomock"
+	gomock "go.uber.org/mock/gomock"
 )
 
 // MockMiddlewareHandlers is a mock of MiddlewareHandlers interface.

@@ -7,8 +7,8 @@ package mocks
 import (
 	reflect "reflect"
 
-	gomock "github.com/golang/mock/gomock"
 	models "github.com/solrac97gr/go-jwt-auth/pkg/logger/domain/models"
+	gomock "go.uber.org/mock/gomock"
 )
 
 // MockLoggerRepository is a mock of LoggerRepository interface.

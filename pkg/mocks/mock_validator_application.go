@@ -7,8 +7,8 @@ package mocks
 import (
 	reflect "reflect"
 
-	gomock "github.com/golang/mock/gomock"
 	ports "github.com/solrac97gr/go-jwt-auth/pkg/validator/domain/ports"
+	gomock "go.uber.org/mock/gomock"
 )
 
 // MockValidatorApplication is a mock of ValidatorApplication interface.

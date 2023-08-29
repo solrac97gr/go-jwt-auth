@@ -11,6 +11,7 @@ func (c *ConfigService) Config() error {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 	jsonParser := json.NewDecoder(file)
 	if err = jsonParser.Decode(&configuration); err != nil {
 		return err
