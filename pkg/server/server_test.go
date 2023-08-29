@@ -62,7 +62,10 @@ func TestServer_Run(t *testing.T) {
 			if tt.assert != nil {
 				tt.assert(t, err)
 			}
-			s.Stop()
+			err = s.Stop()
+			if err != nil {
+				t.Fatal(err)
+			}
 		})
 	}
 }
