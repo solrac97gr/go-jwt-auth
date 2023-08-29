@@ -59,6 +59,9 @@ func (s *Server) Run(port string) error {
 }
 
 func (s *Server) Stop() error {
-	s.app.Shutdown()
+	err := s.app.Shutdown()
+	if err != nil {
+		return err
+	}
 	return nil
 }
